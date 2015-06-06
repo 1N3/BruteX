@@ -1,5 +1,4 @@
-# BruteX v1.1 by 1N3
-
+# BruteX v1.1
 Automatically brute force all services running on a target including:
 
 - Open ports
@@ -9,17 +8,15 @@ Automatically brute force all services running on a target including:
 - Usernames
 - Passwords
 
-USAGE:
-./brutex <IP/Hostname/Domain>
+To brute force multiple hosts, use ./brutex-massscan and include the IP's/hostnames to scan in the targets.txt file.
 
-DEPENDENCIES:
-1. NMap
-2. Hydra
-3. Wfuzz
-4. SNMPWalk
-5. DNSDict
+REQUIREMENTS:
 
-To brute force multiple hosts, use brutex-massscan and include the IP's/hostnames to scan in the targets.txt file.
+- Wfuzz
+- Hydra
+- Nmap
+- DNSDict
+- 
 
 All feedback, questions, comments, send to @CrowdShield on Twitter
 
