@@ -1,4 +1,8 @@
 # BruteX
-Automatically brute force all services running on a target including DNS sub-domain brute attacks, web file/directory brute force attacks and traditional credentialed brute force attacks against common/known services.
+Automatically brute force all services running on a target including:
+
+- DNS sub-domain brute force enumeration
+- Web file/directory brute force discovery
+- Credentialed brute force attacks against all services
 
 https://crowdshield.com
