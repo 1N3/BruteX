@@ -10,14 +10,15 @@ Automatically brute force all services running on a target including:
 - Passwords
 
 USAGE:
-./brutex <IP/Hostname/Domain>
+./brutex target
 
 DEPENDENCIES:
-1. NMap
-2. Hydra
-3. Wfuzz
-4. SNMPWalk
-5. DNSDict
+
+- NMap
+- Hydra
+- Wfuzz
+- SNMPWalk
+- DNSDict
 
 To brute force multiple hosts, use brutex-massscan and include the IP's/hostnames to scan in the targets.txt file.
 
