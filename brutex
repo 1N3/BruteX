@@ -14,9 +14,13 @@
 # 3. Wfuzz
 # 4. SNMPWalk
 # 5. DNSDict
+#
+# HYDRA SERVICES: 
+# asterisk cisco cisco-enable cvs ftp ftps http[s]-{head|get} http[s]-{get|post}-form http-proxy http-proxy-urlenum icq imap[s] irc ldap2[s] ldap3[-{cram|digest}md5][s] mssql mysql(v4) nntp oracle-listener oracle-sid pcanywhere pcnfs pop3[s] postgres rdp redis rexec rlogin rsh rtsp s7-300 sip smb smtp[s] smtp-enum snmp socks5 ssh sshkey teamspeak telnet[s] vmauthd vnc xmpp
+
 
 TARGET="$1"
-LOOT_DIR="."
+LOOT_DIR=$PWD
 USER_FILE="simple-users.txt"
 PASS_FILE="password.lst"
 DNS_FILE="namelist.txt"
@@ -32,9 +36,17 @@ RESET='\e[0m'
 #export HYDRA_PROXY=socks4://127.0.0.1:9050
 
 if [ -z $TARGET ]; then
-	echo -e "$COLOR1+ -- --=[http://crowdshield.com"
-	echo -e "$COLOR1+ -- --=[BruteX v1.0 by 1N3"
-	echo -e "$COLOR1+ -- --=[Usage: brutex <targetip>"
+	echo -e "$COLOR1 __________                __         ____  ___$RESET"
+	echo -e "$COLOR1 \______   \_______ __ ___/  |_  ____ \   \/  /$RESET"
+	echo -e "$COLOR1  |    |  _/\_  __ \  |  \   __\/ __ \ \     / $RESET"
+	echo -e "$COLOR1  |    |   \ |  | \/  |  /|  | \  ___/ /     \ $RESET"
+	echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
+	echo -e "$COLOR1         \/                         \/      \_/$RESET"
+	echo ""
+	echo -e "$COLOR1 + -- --=[BruteX v1.0 by 1N3$RESET"
+	echo -e "$COLOR1 + -- --=[http://crowdshield.com$RESET"
+	echo -e "$COLOR1 + -- --=[Usage: brutex <target IP/hostname>"
+	echo ""
 	exit
 fi
 
@@ -68,7 +80,12 @@ port_139=`grep 'portid="139"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
 port_162=`grep 'portid="162"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
 port_443=`grep 'portid="443"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
 port_445=`grep 'portid="445"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_993=`grep 'portid="993"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_1433=`grep 'portid="1433"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_3389=`grep 'portid="3389"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
 port_5432=`grep 'portid="5432"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_5900=`grep 'portid="5900"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
+port_5901=`grep 'portid="5901"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
 port_8000=`grep 'portid="8000"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
 port_8080=`grep 'portid="8080"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
 port_6667=`grep 'portid="6667"' $LOOT_DIR/nmap/$TARGET.xml | grep open`
@@ -101,7 +118,8 @@ if [ -z "$port_25" ]
 then
 	echo -e "$COLOR1 + -- --=[Port 25 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 25 opened... running tests...$RESET"	
+	echo -e "$COLOR2 + -- --=[Port 25 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET smtp-enum -t $THREADS -e ns
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET smtp -t $THREADS -e ns
 fi
 
@@ -111,8 +129,8 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 80 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -t $THREADS -e ns -m /
-	wfuzz -z file,$DIRBUST_FILE --hc 404,403,301 -c -t $THREADS http://$TARGET/FUZZ/
-	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,301 -c -t $THREADS http://$TARGET/FUZZ.FUZ2Z
+	wfuzz -z file,$DIRBUST_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET/FUZZ/
+	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET/FUZZ.FUZ2Z
 fi
 
 if [ -z "$port_110" ]
@@ -145,8 +163,8 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 443 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -t $THREADS -e ns -m /
-	wfuzz -z file,$DIRBUST_FILE --hc 404,403,301 -c -t $THREADS https://$TARGET/FUZZ/
-	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,301 -c -t $THREADS https://$TARGET/FUZZ.FUZ2Z
+	wfuzz -z file,$DIRBUST_FILE --hc 404,403,400,301,401 -c -t $THREADS https://$TARGET/FUZZ/
+	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,400,301,401 -c -t $THREADS https://$TARGET/FUZZ.FUZ2Z
 fi
 
 if [ -z "$port_445" ]
@@ -157,6 +175,22 @@ else
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET smb -S 445 -t $THREADS -e ns 
 fi
 
+if [ -z "$port_993" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 993 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 993 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET imap -S 993 -t $THREADS -e ns 
+fi
+
+if [ -z "$port_1433" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 1433 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 1433 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET mssql -S 1433 -t $THREADS -e ns 
+fi
+
 if [ -z "$port_3306" ]
 then
 	echo -e "$COLOR1 + -- --=[Port 3306 closed... skipping.$RESET"
@@ -165,14 +199,38 @@ else
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET mysql -t $THREADS -e ns
 fi
 
+if [ -z "$port_3389" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 3389 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 3389 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET rdp -t $THREADS -e ns
+fi
+
+if [ -z "$port_5900" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 5900 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 5900 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET vnc -t $THREADS -e ns
+fi
+
+if [ -z "$port_5901" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 5901 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 5901 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET vnc -S 5901 -t $THREADS -e ns
+fi
+
 if [ -z "$port_8000" ]
 then
 	echo -e "$COLOR1 + -- --=[Port 8000 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 8000 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -s 8000 -t $THREADS -e ns -m /
-	wfuzz -z file,$DIRBUST_FILE --hc 404,403,301 -c -t $THREADS http://$TARGET:8000/FUZZ/
-	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,301 -c -t $THREADS http://$TARGET:8000/FUZZ.FUZ2Z
+	wfuzz -z file,$DIRBUST_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8000/FUZZ/
+	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8000/FUZZ.FUZ2Z
 fi
 
 if [ -z "$port_8100" ]
@@ -181,8 +239,8 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 8100 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -s 8100 -t $THREADS -e ns -m /
-	wfuzz -z file,$DIRBUST_FILE --hc 404,403,301 -c -t $THREADS http://$TARGET:8100/FUZZ/
-	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,301 -c -t $THREADS http://$TARGET:8100/FUZZ.FUZ2Z
+	wfuzz -z file,$DIRBUST_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8100/FUZZ/
+	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8100/FUZZ.FUZ2Z
 fi
 
 if [ -z "$port_8080" ]
@@ -191,8 +249,9 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 8080 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -s 8080 -t $THREADS -e ns -m /
-	wfuzz -z file,$DIRBUST_FILE --hc 404,403,301 -c -t $THREADS http://$TARGET:8080/FUZZ/
-	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,301 -c -t $THREADS http://$TARGET:8080/FUZZ.FUZ2Z
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-proxy -s 8080 -t $THREADS -e ns
+	wfuzz -z file,$DIRBUST_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8080/FUZZ/
+	wfuzz -z file,$DIRBUST_FILE -z file,$EXT_FILE --hc 404,403,400,301,401 -c -t $THREADS http://$TARGET:8080/FUZZ.FUZ2Z
 fi
 
 if [ -z "$port_6667" ]
