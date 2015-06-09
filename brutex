@@ -1,5 +1,5 @@
 #!/bin/bash
-# BruteX v1.0 by 1N3
+# BruteX v1.1 by 1N3
 # http://crowdshield.com
 #
 # ABOUT:
@@ -43,7 +43,7 @@ if [ -z $TARGET ]; then
 	echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
 	echo -e "$COLOR1         \/                         \/      \_/$RESET"
 	echo ""
-	echo -e "$COLOR1 + -- --=[BruteX v1.0 by 1N3$RESET"
+	echo -e "$COLOR1 + -- --=[BruteX v1.1 by 1N3$RESET"
 	echo -e "$COLOR1 + -- --=[http://crowdshield.com$RESET"
 	echo -e "$COLOR1 + -- --=[Usage: brutex <target IP/hostname>"
 	echo ""
@@ -59,7 +59,7 @@ echo -e "$COLOR1  |    |   \ |  | \/  |  /|  | \  ___/ /     \ $RESET"
 echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
 echo -e "$COLOR1         \/                         \/      \_/$RESET"
 echo ""
-echo -e "$COLOR1 + -- --=[BruteX v1.0 by 1N3$RESET"
+echo -e "$COLOR1 + -- --=[BruteX v1.1 by 1N3$RESET"
 echo -e "$COLOR1 + -- --=[http://crowdshield.com$RESET"
 echo ""
 echo ""
