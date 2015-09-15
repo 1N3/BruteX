@@ -12,7 +12,7 @@
 # 1. NMap
 # 2. Hydra
 # 3. SNMPWalk
-# 4. DNSEnum
+# 4. DNSDict
 #
 # HYDRA SERVICES: 
 # asterisk cisco cisco-enable cvs ftp ftps http[s]-{head|get} http[s]-{get|post}-form http-proxy http-proxy-urlenum icq imap[s] irc ldap2[s] ldap3[-{cram|digest}md5][s] mssql mysql(v4) nntp oracle-listener oracle-sid pcanywhere pcnfs pop3[s] postgres rdp redis rexec rlogin rsh rtsp s7-300 sip smb smtp[s] smtp-enum snmp socks5 ssh sshkey teamspeak telnet[s] vmauthd vnc xmpp
@@ -20,7 +20,7 @@
 
 TARGET="$1"
 PORT="$2"
-LOOT_DIR=loot
+LOOT_DIR=nmap
 USER_FILE="simple-users.txt"
 PASS_FILE="password.lst"
 DNS_FILE="namelist.txt"
@@ -137,7 +137,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 80 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 80 opened... running tests...$RESET"
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -t $THREADS -f -q -e ns -m $HTTP_LOCATION
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -t $THREADS -e ns -m $HTTP_LOCATION
 fi
 
 if [ -z "$port_110" ]
@@ -170,7 +170,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 443 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 443 opened... running tests...$RESET"
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET https-get -s 443 -t $THREADS -f -q -e ns -m $HTTP_LOCATION 
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET https-get -s 443 -t $THREADS -e ns -m $HTTP_LOCATION 
 fi
 
 if [ -z "$port_445" ]
@@ -266,7 +266,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 8000 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 8000 opened... running tests...$RESET"
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -s 8000 -f -q -t $THREADS -e ns -m /
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -s 8000 -t $THREADS -e ns -m /
 fi
 
 if [ -z "$port_8080" ]
@@ -274,8 +274,8 @@ then
 	echo -e "$COLOR1 + -- --=[Port 8080 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 8080 opened... running tests...$RESET"
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8080 -f -q -t $THREADS -e ns -m /
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-proxy -S 8080 -f -q -t $THREADS -e ns
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8080 -t $THREADS -e ns -m /
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-proxy -S 8080 -t $THREADS -e ns
 fi
 
 if [ -z "$port_8100" ]
@@ -283,8 +283,8 @@ then
 	echo -e "$COLOR1 + -- --=[Port 8100 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 8100 opened... running tests...$RESET"
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8100 -f -q -t $THREADS -e ns -m /
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-proxy -S 8100 -f -q -t $THREADS -e ns
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8100 -t $THREADS -e ns -m /
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-proxy -S 8100 -t $THREADS -e ns
 fi
 
 if [ -z "$port_6667" ]
@@ -297,7 +297,7 @@ fi
 
 echo ""
 echo -e "$COLOR3################################### Brute Forcing DNS ###############################$RESET"
-dnsenum --threads 30 --noreverse --subfile $LOOT_DIR/domains-$TARGET.txt -f namelist.txt -r $TARGET
+dnsdict6 $TARGET $DNS_FILE -4
 echo ""
 echo -e "$COLOR3################################### Done! ###########################################$RESET"
 exit 0
