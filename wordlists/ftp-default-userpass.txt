@@ -1,0 +1,10 @@
+anonymous:anonymous
+anonymous:sp@rta.com
+admin:admin
+admin:password
+ftp:ftp
+ftp:password
+guest:guest
+root:root
+root:toor
+test:test

@@ -1,0 +1,6 @@
+admin:admin
+admin:password
+postgres:
+postgres:admin
+postgres:password
+postgres:postgres
