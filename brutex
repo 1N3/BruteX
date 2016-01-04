@@ -56,6 +56,7 @@ if [ -z $TARGET ]; then
 fi
 
 clear
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 echo -e "$COLOR1 __________                __         ____  ___$RESET"
 echo -e "$COLOR1 \______   \_______ __ ___/  |_  ____ \   \/  /$RESET"
@@ -289,7 +290,6 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 8080 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8080 -f -q -t $THREADS -e ns -m /
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-proxy -S 8080 -f -q -t $THREADS -e ns
 fi
 
 if [ -z "$port_8100" ]
@@ -298,7 +298,6 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 8100 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8100 -f -q -t $THREADS -e ns -m /
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-proxy -S 8100 -f -q -t $THREADS -e ns
 fi
 
 if [ -z "$port_6667" ]

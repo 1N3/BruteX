@@ -2,7 +2,6 @@ admin
 administrator
 anonymous
 backup
-bee
 ftp
 guest
 GUEST
@@ -13,7 +12,6 @@ msfadmin
 mysql
 nobody
 oracle
-owaspbwa
 postfix
 postgres
 private

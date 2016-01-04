@@ -22,6 +22,8 @@ https://crowdshield.com
 ```
 
 ##CHANGELOG:
+* v1.3b Fixed brutex global DIR issue
+* v1.3a Fixed HTTP proxy brute force options
 * v1.3 added faster scan options for nmap
 * v1.3 revised password brute force lists for more efficient service brute forcing
 * v1.3 added wordlist directory with new wordlist selections
