@@ -22,6 +22,7 @@ https://crowdshield.com
 ```
 
 ##CHANGELOG:
+* v1.3c Fixed error with DNS namelist.txt
 * v1.3b Fixed brutex global DIR issue
 * v1.3a Fixed HTTP proxy brute force options
 * v1.3 added faster scan options for nmap

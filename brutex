@@ -310,7 +310,7 @@ fi
 
 echo ""
 echo -e "$COLOR3################################### Brute Forcing DNS ###############################$RESET"
-dnsenum --threads 30 --noreverse --subfile $LOOT_DIR/domains-$TARGET.txt -f namelist.txt -r $TARGET
+dnsenum --threads 30 --noreverse --subfile $LOOT_DIR/domains-$TARGET.txt -f $DNS_FILE -r $TARGET
 echo ""
 echo -e "$COLOR3################################### Done! ###########################################$RESET"
 exit 0
