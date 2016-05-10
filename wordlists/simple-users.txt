@@ -31,3 +31,4 @@ tomcat
 user
 webmaster
 www-data
+Fortimanager_Access

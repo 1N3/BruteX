@@ -1,5 +1,5 @@
 #!/bin/bash 
-# BruteX v1.3 by 1N3
+# BruteX v1.4 by 1N3
 # http://crowdshield.com
 #
 # ABOUT:
@@ -281,6 +281,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 8000 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 8000 opened... running tests...$RESET"
+	dirb http://$TARGET:8000
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -s 8000 -f -q -t $THREADS -e ns -m /
 fi
 
@@ -289,6 +290,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 8080 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 8080 opened... running tests...$RESET"
+	dirb http://$TARGET:8080
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8080 -f -q -t $THREADS -e ns -m /
 fi
 
@@ -297,6 +299,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 8100 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 8100 opened... running tests...$RESET"
+	dirb http://$TARGET:8100
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8100 -f -q -t $THREADS -e ns -m /
 fi
 
