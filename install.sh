@@ -32,10 +32,9 @@ apt-get install nmap hydra dnsenum
 echo -e "$OKORANGE + -- --=[Setting up environment...$RESET"
 mkdir loot 2> /dev/null
 chmod +x $INSTALL_DIR/brutex
-rm /usr/bin/brutex
+rm -f /usr/bin/brutex 2> /dev/null
 ln -s $INSTALL_DIR/brutex /usr/bin/brutex
 
 echo -e "$OKORANGE + -- --=[Done!$RESET"
-echo -e "$OKORANGE + -- --=[To run, type 'brutex'! $RESET"
 
 
