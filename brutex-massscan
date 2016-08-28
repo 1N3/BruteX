@@ -1,7 +1,0 @@
-#!/bin/bash 
-#
-# BruteX Mass Scan Script
-# 
-# ABOUT: This script automatically performs a mass scan of all targets in the targets.txt file
-#
-for a in `cat targets.txt`; do ./brutex $a; done;
