@@ -17,10 +17,3 @@ https://crowdshield.com
 ```
 brutex target <port>
 ```
-
-##DEPENDENCIES:
-```
-* NMap
-* Hydra
-* DNSEnum
-```
