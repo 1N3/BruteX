@@ -5,13 +5,11 @@
 # ABOUT:
 # BruteX is a simple bash script used to brute force all services on a target.
 #
-# USAGE:
-# ./brutex <IP/hostname> <port>
+# INSTALL:
+# ./install.sh
 #
-# DEPENDENCIES:
-# 1. NMap
-# 2. Hydra
-# 3. DNSEnum
+# USAGE:
+# brutex <IP/hostname> <port>
 #
 # HYDRA SERVICES: 
 # asterisk cisco cisco-enable cvs ftp ftps http[s]-{head|get} http[s]-{get|post}-form http-proxy http-proxy-urlenum icq imap[s] irc ldap2[s] ldap3[-{cram|digest}md5][s] mssql mysql(v4) nntp oracle-listener oracle-sid pcanywhere pcnfs pop3[s] postgres rdp redis rexec rlogin rsh rtsp s7-300 sip smb smtp[s] smtp-enum snmp socks5 ssh sshkey teamspeak telnet[s] vmauthd vnc xmpp
