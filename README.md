@@ -1,4 +1,4 @@
-# BruteX v1.4 by 1N3 @ CrowdShield
+# BruteX by 1N3 @ CrowdShield
 https://crowdshield.com 
 
 ##Automatically brute force all services running on a target
@@ -22,6 +22,8 @@ https://crowdshield.com
 ```
 
 ##CHANGELOG:
+* v1.5 Added install.sh
+* v1.5 Fixed http/https brute force options
 * v1.4 Removed dirb web directory brute forcing
 * v1.3d Added Fortinet user/pass 
 * v1.3d Added DirBuster for web brute forcing

