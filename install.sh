@@ -19,21 +19,21 @@ echo -e "$COLOR1 + -- --=[http://crowdshield.com$RESET"
 echo -e "$RESET"
 
 # DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-INSTALL_DIR=/usr/share/brutex
+BRUTEX_INSTALL_DIR=/usr/share/brutex
 
-echo -e "$OKGREEN + -- --=[This script will install brutex under $INSTALL_DIR."
-mkdir -p $INSTALL_DIR 2> /dev/null
-cp -Rf $PWD/* $INSTALL_DIR 
-cd $INSTALL_DIR
+echo -e "$OKGREEN + -- --=[This script will install brutex under $BRUTEX_INSTALL_DIR."
+mkdir -p $BRUTEX_INSTALL_DIR 2> /dev/null
+cp -Rf $PWD/* $BRUTEX_INSTALL_DIR 
+cd $BRUTEX_INSTALL_DIR
 
 echo -e "$OKORANGE + -- --=[Installing package dependencies...$RESET"
 apt-get install nmap hydra dnsenum
 
 echo -e "$OKORANGE + -- --=[Setting up environment...$RESET"
 mkdir loot 2> /dev/null
-chmod +x $INSTALL_DIR/brutex
+chmod +x $BRUTEX_INSTALL_DIR/brutex
 rm -f /usr/bin/brutex 2> /dev/null
-ln -s $INSTALL_DIR/brutex /usr/bin/brutex
+ln -s $BRUTEX_INSTALL_DIR/brutex /usr/bin/brutex
 
 echo -e "$OKORANGE + -- --=[Done!$RESET"
 
