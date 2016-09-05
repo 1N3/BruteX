@@ -1,4 +1,5 @@
 ##CHANGELOG:
+* v1.5a Removed clear command
 * v1.5 Added install.sh
 * v1.5 Fixed SNMP brute force options
 * v1.5 Fixed http/https brute force options

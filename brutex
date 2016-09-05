@@ -52,7 +52,6 @@ if [ -z $TARGET ]; then
 	exit
 fi
 
-clear
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 echo -e "$COLOR1 __________                __         ____  ___$RESET"
