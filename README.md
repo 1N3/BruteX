@@ -1,19 +1,19 @@
 # BruteX by 1N3@CrowdShield
 https://crowdshield.com 
 
-##Automatically brute force all services running on a target
+## Automatically brute force all services running on a target
 
 * Open ports
 * DNS domains
 * Usernames
 * Passwords
 
-##INSTALL:
+## INSTALL:
 ```
 ./install.sh
 ```
 
-##USAGE:
+## USAGE:
 ```
 brutex target <port>
 ```
