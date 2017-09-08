@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-##CHANGELOG:
-* v1.6 Removed HTTP/HTTPS basic auth checks to normal scans. Use brutex <IP> port <80/443> to scan with that option... 
-=======
 ## CHANGELOG:
->>>>>>> fad25d3ab9ffaeda62824e28960b8816fcaa5a15
+* v1.6 Removed HTTP/HTTPS basic auth checks to normal scans. Use brutex <IP> port <80/443> to scan with that option... 
 * v1.5b Fixed issue with dirb
 * v1.5a Removed clear command
 * v1.5 Added install.sh
