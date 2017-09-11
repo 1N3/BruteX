@@ -4,7 +4,6 @@ https://crowdshield.com
 ## Automatically brute force all services running on a target
 
 * Open ports
-* DNS domains
 * Usernames
 * Passwords
 

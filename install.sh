@@ -14,7 +14,7 @@ echo -e "$COLOR1  |    |   \ |  | \/  |  /|  | \  ___/ /     \ $RESET"
 echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
 echo -e "$COLOR1         \/                         \/      \_/$RESET"
 echo ""
-echo -e "$COLOR1 + -- --=[BruteX v1.5 by 1N3$RESET"
+echo -e "$COLOR1 + -- --=[BruteX by 1N3$RESET"
 echo -e "$COLOR1 + -- --=[http://crowdshield.com$RESET"
 echo -e "$RESET"
 
