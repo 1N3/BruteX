@@ -4,3 +4,7 @@ postgres:
 postgres:admin
 postgres:password
 postgres:postgres
+dcmadmin:passw0rd
+postgres:amber
+postgres:postgres
+postgres:123
