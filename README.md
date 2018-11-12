@@ -25,7 +25,7 @@ docker run -it brutex target <port>
 ```
 
 ## DEMO VIDEO:
-[![BruteX Demo](https://img.youtube.com/vi/nA_V_u3QZA4/0.jpg)](https://www.youtube.com/watch?v=nA_V_u3QZA4)
+[![BruteX Demo](https://img.youtube.com/vi/nA_V_u3QZA4/0.jpg)](https://www.youtube.com/watch?v=7QCBh9Enl2M)
 
 ## LICENSE:
 This software is free to distribute, modify and use with the condition that credit is provided to the creator (1N3@CrowdShield) and is not for commercial use.
