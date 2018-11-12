@@ -1,4 +1,5 @@
 ## CHANGELOG:
+* v1.8 Added improved default credential list for each service
 * v1.7 Removed DNS brute forcing
 * v1.7 Added -P0 to NMap scan options
 * v1.6 Removed HTTP/HTTPS basic auth checks to normal scans. Use brutex <IP> port <80/443> to scan with that option... 
