@@ -306,7 +306,7 @@ then
 	echo -e "$COLOR1 + -- --=[Port 5901 closed... skipping.$RESET"
 else
 	echo -e "$COLOR2 + -- --=[Port 5901 opened... running tests...$RESET"
-	hydra -P $VNC_FILE $TARGET vnc -S 5900 -t $THREADS -e ns
+	hydra -P $VNC_FILE $TARGET vnc -S 5901 -t $THREADS -e ns
 	hydra -P $PASS_FILE $TARGET vnc -S 5901 -t $THREADS -e ns
 fi
 
