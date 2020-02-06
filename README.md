@@ -37,4 +37,4 @@ You may modify and re-distribute this software as long as the project name "Brut
 ## LINKS:
 - [Twitter](https://www.twitter.com/xer0dayz "Personal Twitter")
 - [Twitter](https://www.twitter.com/xerosecurity "Company Twitter")
-- [Website](https://xerosecurity.com "XeroSecurity"
+- [Website](https://xerosecurity.com "XeroSecurity")
