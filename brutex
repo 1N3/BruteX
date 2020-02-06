@@ -62,9 +62,9 @@ if [ -z $TARGET ]; then
 	echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
 	echo -e "$COLOR1         \/                         \/      \_/$RESET"
 	echo ""
-	echo -e "$COLOR1 + -- --=[BruteX v$VER by @xer0dayz$RESET"
-	echo -e "$COLOR1 + -- --=[https://xerosecurity.com$RESET"
-	echo -e "$COLOR1 + -- --=[Usage: brutex <target> <port>"
+	echo -e "$COLOR1 + -- --=[ BruteX v$VER by @xer0dayz$RESET"
+	echo -e "$COLOR1 + -- --=[ https://xerosecurity.com$RESET"
+	echo -e "$COLOR1 + -- --=[ Usage: brutex <target> <port>"
 	echo -e "$RESET"
 	exit
 fi
@@ -78,8 +78,8 @@ echo -e "$COLOR1  |    |   \ |  | \/  |  /|  | \  ___/ /     \ $RESET"
 echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
 echo -e "$COLOR1         \/                         \/      \_/$RESET"
 echo ""
-echo -e "$COLOR1 + -- --=[BruteX v$VER by @xer0dayz$RESET"
-echo -e "$COLOR1 + -- --=[http://xerosecurity.com$RESET"
+echo -e "$COLOR1 + -- --=[ BruteX v$VER by @xer0dayz$RESET"
+echo -e "$COLOR1 + -- --=[ http://xerosecurity.com$RESET"
 echo ""
 echo ""
 
@@ -121,18 +121,18 @@ port_8080=`grep 'portid="8080"' $LOOT_DIR/nmap-$TARGET.xml | grep open`
 
 if [ -z "$port_21" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 21 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 21 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 21 opened... running tests...$RESET"	
+	echo -e "$COLOR2 + -- --=[ Port 21 opened... running tests...$RESET"	
 	hydra -C $FTP_USER_PASS $TARGET ftp -t $THREADS -e ns
 	hydra -L $FTP_USERS -P $FTP_PASS $TARGET ftp -t $THREADS -e ns
 fi
 
 if [ -z "$port_22" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 22 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 22 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 22 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 22 opened... running tests...$RESET"
 	hydra -C $SSH_USER_PASS $TARGET ssh -t $THREADS -e ns
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET ssh -t $THREADS -e ns
 	hydra -L $SSH_USERS -P $SSH_PASS $TARGET ssh -t $THREADS -e ns
@@ -140,9 +140,9 @@ fi
 
 if [ -z "$port_23" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 23 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 23 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 23 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 23 opened... running tests...$RESET"
 	hydra -C $TELNET_USER_PASS $TARGET telnet -t $THREADS -e ns
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET telnet -t $THREADS -e ns
 	hydra -L $TELNET_USERS -P $TELNET_PASS $TARGET telnet -t $THREADS -e ns
@@ -150,9 +150,9 @@ fi
 
 if [ -z "$port_25" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 25 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 25 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 25 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 25 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET smtp-enum -t $THREADS -e ns
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET smtp -t $THREADS -e ns
 	hydra -L $SMTP_USERS -P $SMTP_PASS $TARGET smtp -t $THREADS -e ns
@@ -160,185 +160,185 @@ fi
 
 if [ -z "$port_80" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 80 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 80 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 80 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 80 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-get -t $THREADS -f -q -e ns -m $HTTP_LOCATION
 fi
 
 if [ -z "$port_110" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 110 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 110 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 110 opened... running tests...$RESET"	
+	echo -e "$COLOR2 + -- --=[ Port 110 opened... running tests...$RESET"	
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET pop3 -t $THREADS -e ns
 	hydra -L $POP_USERS -P $POP_PASS $TARGET pop3 -t $THREADS -e ns
 fi
 
 if [ -z "$port_139" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 139 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 139 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 139 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 139 opened... running tests...$RESET"
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET smb -S 139 -t $THREADS -e ns
 fi
 
 if [ -z "$port_162" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 162 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 162 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 162 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 162 opened... running tests...$RESET"
 	hydra -P $SNMP_FILE snmp -S 162 -t $THREADS -e ns
 fi
 
 if [ -z "$port_389" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 389 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 389 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 389 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 389 opened... running tests...$RESET"
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET ldap2 -S 389 -t $THREADS -e ns
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET ldap3 -S 389 -t $THREADS -e ns
 fi
 
 if [ -z "$port_443" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 443 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 443 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 443 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 443 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET https-get -s 443 -t $THREADS -f -q -e ns -m $HTTP_LOCATION 
 fi
 
 if [ -z "$port_445" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 445 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 445 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 445 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 445 opened... running tests...$RESET"
 	hydra -C $WINDOWS_USER_PASS $TARGET smb -S 445 -t $THREADS -e ns
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET smb -S 445 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_512" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 512 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 512 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 512 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 512 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET rexec -S 512 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_513" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 513 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 513 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 513 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 513 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET rlogin -S 513 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_514" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 514 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 514 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 514 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 514 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET rsh -S 514 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_993" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 993 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 993 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 993 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 993 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET imap -S 993 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_1433" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 1433 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 1433 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 1433 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 1433 opened... running tests...$RESET"
 	hydra -C $MSSQL_USER_PASS $TARGET mssql -S 1433 -t $THREADS -e ns
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET mssql -S 1433 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_1521" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 1521 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 1521 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 1521 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 1521 opened... running tests...$RESET"
 	hydra -C $ORACLE_USER_PASS $TARGET oracle -S 1521 -t $THREADS -e ns 
 fi
 
 if [ -z "$port_3306" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 3306 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 3306 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 3306 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 3306 opened... running tests...$RESET"
 	hydra -C $MYSQL_USER_PASS $TARGET mysql -t $THREADS -e ns
 	hydra -L $SQL_USERS -P $SQL_PASS $TARGET mysql -t $THREADS -e ns
 fi
 
 if [ -z "$port_3389" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 3389 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 3389 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 3389 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 3389 opened... running tests...$RESET"
 	hydra -C $WINDOWS_USER_PASS $TARGET rdp -t $THREADS -e ns
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET rdp -t $THREADS -e ns
 fi
 
 if [ -z "$port_5432" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 5432 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 5432 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 5432 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 5432 opened... running tests...$RESET"
 	hydra -C $POSTGRES_USER_PASS $TARGET postgres -t $THREADS -e ns
 fi
 
 if [ -z "$port_5900" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 5900 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 5900 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 5900 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 5900 opened... running tests...$RESET"
 	hydra -P $VNC_FILE $TARGET vnc -S 5900 -t $THREADS -e ns
 	hydra -P $PASS_FILE $TARGET vnc -S 5900 -t $THREADS -e ns
 fi
 
 if [ -z "$port_5901" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 5901 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 5901 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 5901 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 5901 opened... running tests...$RESET"
 	hydra -P $VNC_FILE $TARGET vnc -S 5901 -t $THREADS -e ns
 	hydra -P $PASS_FILE $TARGET vnc -S 5901 -t $THREADS -e ns
 fi
 
 if [ -z "$port_6667" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 6667 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 6667 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 6667 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 6667 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET irc -s 6667 -t $THREADS -e ns
 fi
 
 if [ -z "$port_8000" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 8000 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 8000 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 8000 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 8000 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -s 8000 -f -q -t $THREADS -e ns -m /
 fi
 
 if [ -z "$port_8080" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 8080 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 8080 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 8080 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 8080 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8080 -f -q -t $THREADS -e ns -m /
 fi
 
 if [ -z "$port_8100" ]
 then
-	echo -e "$COLOR1 + -- --=[Port 8100 closed... skipping.$RESET"
+	echo -e "$COLOR1 + -- --=[ Port 8100 closed... skipping.$RESET"
 else
-	echo -e "$COLOR2 + -- --=[Port 8100 opened... running tests...$RESET"
+	echo -e "$COLOR2 + -- --=[ Port 8100 opened... running tests...$RESET"
 	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-head -S 8100 -f -q -t $THREADS -e ns -m /
 fi
 
