@@ -24,14 +24,13 @@ echo -e "$OKGREEN + -- --=[ This script will install brutex under $BRUTEX_INSTAL
 mkdir -p $BRUTEX_INSTALL_DIR 2> /dev/null
 cp -Rf $PWD/* $BRUTEX_INSTALL_DIR 
 cd $BRUTEX_INSTALL_DIR
-
-apt-get install nmap hydra dnsenum
-
+apt-get update
+apt-get install -y nmap hydra dnsenum
 mkdir loot 2> /dev/null
 chmod +x $BRUTEX_INSTALL_DIR/brutex
 rm -f /usr/bin/brutex 2> /dev/null
 ln -s /usr/share/brutex/brutex /usr/bin/brutex
-
+cp -f $BRUTEX_INSTALL_DIR/brutex.desktop /usr/share/applications/ 2> /dev/null
 echo -e "$OKORANGE + -- --=[ Done!$RESET"
 
 
