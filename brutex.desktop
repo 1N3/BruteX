@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=brutex
+Encoding=UTF-8
+Exec=bash-wrapper "sudo brutex"
+Icon=avatar-default
+StartupNotify=false
+Terminal=true
+Type=Application
+Categories=05-password-attacks;
+X-Kali-Package=brutex
+Comment=
+Path=
