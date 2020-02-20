@@ -20,11 +20,6 @@ echo -e "$RESET"
 
 BRUTEX_INSTALL_DIR=/usr/share/brutex
 
-if [[ "$1" != "force" ]]; then
-    echo -e "$OKGREEN + -- --=[ This script will install brutex under $BRUTEX_INSTALL_DIR."
-	read answer
-fi
-
 echo -e "$OKGREEN + -- --=[ Installing brutex under $BRUTEX_INSTALL_DIR..."
 mkdir -p $BRUTEX_INSTALL_DIR 2> /dev/null
 cp -Rf $PWD/* $BRUTEX_INSTALL_DIR 
