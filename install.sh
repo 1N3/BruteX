@@ -20,7 +20,7 @@ echo -e "$RESET"
 
 BRUTEX_INSTALL_DIR=/usr/share/brutex
 
-echo -e "$OKGREEN + -- --=[ Installing brutex under $BRUTEX_INSTALL_DIR..."
+echo -e "$OKBLUE[*]$RESET Installing brutex under $BRUTEX_INSTALL_DIR..."
 mkdir -p $BRUTEX_INSTALL_DIR 2> /dev/null
 cp -Rf $PWD/* $BRUTEX_INSTALL_DIR 
 cd $BRUTEX_INSTALL_DIR
@@ -31,6 +31,6 @@ chmod +x $BRUTEX_INSTALL_DIR/brutex
 rm -f /usr/bin/brutex 2> /dev/null
 ln -s /usr/share/brutex/brutex /usr/bin/brutex
 cp -f $BRUTEX_INSTALL_DIR/brutex.desktop /usr/share/applications/ 2> /dev/null
-echo -e "$OKORANGE + -- --=[ Done! $RESET"
+echo -e "$OKBLUE[*]$RESET + -- --=[ Done! $RESET"
 
 
