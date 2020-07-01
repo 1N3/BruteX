@@ -31,6 +31,6 @@ chmod +x $BRUTEX_INSTALL_DIR/brutex
 rm -f /usr/bin/brutex 2> /dev/null
 ln -s /usr/share/brutex/brutex /usr/bin/brutex
 cp -f $BRUTEX_INSTALL_DIR/brutex.desktop /usr/share/applications/ 2> /dev/null
-echo -e "$OKBLUE[*]$RESET + -- --=[ Done! $RESET"
+echo -e "$OKBLUE[*]$RESET Done! $RESET"
 
 
