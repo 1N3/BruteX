@@ -5,6 +5,7 @@
 COLOR1='\033[91m'
 COLOR2='\033[92m'
 COLOR3='\033[92m'
+OKBLUE='\033[94m'
 RESET='\e[0m'
 
 echo -e "$COLOR1 __________                __         ____  ___$RESET"
