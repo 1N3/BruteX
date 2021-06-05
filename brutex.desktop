@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=brutex
 Encoding=UTF-8
-Exec=bash-wrapper "sudo brutex"
+Exec=/usr/share/kali-menu/exec-in-shell "sudo brutex"
 Icon=avatar-default
 StartupNotify=false
 Terminal=true
