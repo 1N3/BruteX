@@ -17,7 +17,7 @@
 
 TARGET="$1"
 PORT="$2"
-VER="2.2"
+VER="2.3"
 LOOT_DIR=/usr/share/brutex/loot
 FTP_USER_PASS="/usr/share/brutex/wordlists/ftp-default-userpass.txt"
 FTP_USERS="/usr/share/brutex/wordlists/ftp_defuser.lst"

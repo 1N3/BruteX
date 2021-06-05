@@ -1,4 +1,5 @@
 ## CHANGELOG:
+* v2.3 Updated default credentials for Rasberry Pi/Kali
 * v2.2 Added CVE-2020-29583 Zyxel SSH Hardcoded Credentials
 * v2.1 Added Kali XFCE4 start menu application
 * v2.1 Added 0day vulnerability (backdoor) in firmware for HiSilicon-based DVRs, NVRs and IP cameras
