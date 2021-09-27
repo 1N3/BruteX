@@ -32,9 +32,9 @@ docker run -it brutex target <port>
 [![BruteX Demo](https://img.youtube.com/vi/nA_V_u3QZA4/0.jpg)](https://www.youtube.com/watch?v=7QCBh9Enl2M)
 
 ## LICENSE:
-You may modify and re-distribute this software as long as the project name "BruteX", credit to the author "xer0dayz" and website URL "https://xerosecurity.com" are NOT mofified. Doing so will break the license agreement and a takedown notice will be issued. 
+You may modify and re-distribute this software as long as the project name "BruteX", credit to the author "xer0dayz" and website URL "https://sn1persecurity.com" are NOT mofified. Doing so will break the license agreement and a takedown notice will be issued. 
 
 ## LINKS:
 - [Twitter](https://www.twitter.com/xer0dayz "Personal Twitter")
-- [Twitter](https://www.twitter.com/xerosecurity "Company Twitter")
-- [Website](https://xerosecurity.com "XeroSecurity")
+- [Twitter](https://www.twitter.com/sn1persecurity "Company Twitter")
+- [Website](https://sn1persecurity.com "Sn1perSecurity")

@@ -1,6 +1,6 @@
 #!/bin/bash 
 # BruteX by @xer0dayz
-# http://xerosecurity.com
+# http://sn1persecurity.com
 #
 # ABOUT:
 # BruteX is a simple bash script used to brute force all services on a target.
@@ -63,7 +63,7 @@ if [ -z $TARGET ]; then
 	echo -e "$COLOR1         \/                         \/      \_/$RESET"
 	echo ""
 	echo -e "$COLOR1 + -- --=[ BruteX v$VER by @xer0dayz$RESET"
-	echo -e "$COLOR1 + -- --=[ https://xerosecurity.com$RESET"
+	echo -e "$COLOR1 + -- --=[ https://sn1persecurity.com$RESET"
 	echo -e "$COLOR1 + -- --=[ Usage: brutex <target> <port>"
 	echo -e "$RESET"
 	exit
@@ -79,7 +79,7 @@ echo -e "$COLOR1  |______  / |__|  |____/ |__|  \___  >___/\  \ $RESET"
 echo -e "$COLOR1         \/                         \/      \_/$RESET"
 echo ""
 echo -e "$COLOR1 + -- --=[ BruteX v$VER by @xer0dayz$RESET"
-echo -e "$COLOR1 + -- --=[ http://xerosecurity.com$RESET"
+echo -e "$COLOR1 + -- --=[ http://sn1persecurity.com$RESET"
 echo ""
 echo ""
 
