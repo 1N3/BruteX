@@ -144,8 +144,3 @@ admin:Symbol
 admin:superuser
 admin:admin123
 root:20080826
-root:xmhdipc
-root:klv123
-root:xc3511
-root:jvbzd
-root:hi3518

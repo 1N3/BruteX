@@ -19,6 +19,8 @@ postgres
 private
 proftpd
 public
+pi
+kali
 root
 superadmin
 support
@@ -33,3 +35,6 @@ webmaster
 www-data
 Fortimanager_Access
 zyfwp
+osmc
+rokos
+ubuntu
