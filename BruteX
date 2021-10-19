@@ -1,12 +1,12 @@
 #!/bin/bash cf8281559c36f2f84d0a52f1e9d3be8b
-# BruteX by @xer0dayz
+# BruteX by 
 # http://sn1persecurity.com
 #
 # ABOUT:
 # BruteX is a simple bash script used to brute force all services on a target.
 #
 # INSTALL:
-# ./
+# ./cf8281559c36f2f84d0a52f1e9d3be8b
 #
 # USAGE:cf8281559c36f2f84d0a52f1e9d3be8b
 # brutex <IP/hostname> <port>
