@@ -6,9 +6,9 @@
 # BruteX is a simple bash script used to brute force all services on a target.
 #
 # INSTALL:
-# ./install.sh
+# ./
 #
-# USAGE:
+# USAGE:cf8281559c36f2f84d0a52f1e9d3be8b
 # brutex <IP/hostname> <port>
 #
 # HYDRA SERVICES: 
