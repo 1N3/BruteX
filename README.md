@@ -29,7 +29,7 @@ docker run -it brutex target <port>
 ```
 
 ## LICENSE:
-You may modify and re-distribute this software as long as the project name "BruteX", credit to the author "xer0dayz" and website URL "https://sn1persecurity.com" are NOT mofified. Doing so will break the license agreement and a takedown notice will be issued. 
+You may modify and re-distribute this software as long as the project name "BruteX", credit to the author "xer0dayz" and website URL "https://sn1persecurity.com" are NOT modified. Doing so will break the license agreement and a takedown notice will be issued. 
 
 ## LINKS:
 - [Twitter](https://www.twitter.com/xer0dayz "Personal Twitter")
