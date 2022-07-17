@@ -17,7 +17,7 @@
 
 TARGET="$1"
 PORT="$2"
-VER="2.3"
+VER="2.4"
 LOOT_DIR=/usr/share/brutex/loot
 FTP_USER_PASS="/usr/share/brutex/wordlists/ftp-default-userpass.txt"
 FTP_USERS="/usr/share/brutex/wordlists/ftp_defuser.lst"
@@ -86,7 +86,7 @@ echo ""
 echo -e "$COLOR3################################### Running Port Scan ##############################$RESET"
 if [ -z "$PORT" ] 
 then
-	nmap -T4 -P0 --open $TARGET -p21,22,23,25,53,80,110,139,162,389,443,445,512,513,514,993,1433,1521,3306,3389,5432,5900,5901,8000,8080,6667 -oX $LOOT_DIR/nmap-$TARGET.xml
+	nmap -T4 -P0 --open $TARGET -p21,22,23,25,53,110,139,162,389,445,512,513,514,993,1433,1521,3306,3389,5432,5900,5901,8000,8080,6667 -oX $LOOT_DIR/nmap-$TARGET.xml
 else
 	nmap -T4 -P0 --open $TARGET -p $PORT -oX $LOOT_DIR/nmap-$TARGET.xml
 fi
@@ -158,14 +158,6 @@ else
 	hydra -L $SMTP_USERS -P $SMTP_PASS $TARGET smtp -t $THREADS -e ns
 fi
 
-if [ -z "$port_80" ]
-then
-	echo -e "$COLOR1 + -- --=[ Port 80 closed... skipping.$RESET"
-else
-	echo -e "$COLOR2 + -- --=[ Port 80 opened... running tests...$RESET"
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET http-get -t $THREADS -f -q -e ns -m $HTTP_LOCATION
-fi
-
 if [ -z "$port_110" ]
 then
 	echo -e "$COLOR1 + -- --=[ Port 110 closed... skipping.$RESET"
@@ -198,14 +190,6 @@ else
 	echo -e "$COLOR2 + -- --=[ Port 389 opened... running tests...$RESET"
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET ldap2 -S 389 -t $THREADS -e ns
 	hydra -L $WINDOWS_USER_LIST -P $PASS_FILE $TARGET ldap3 -S 389 -t $THREADS -e ns
-fi
-
-if [ -z "$port_443" ]
-then
-	echo -e "$COLOR1 + -- --=[ Port 443 closed... skipping.$RESET"
-else
-	echo -e "$COLOR2 + -- --=[ Port 443 opened... running tests...$RESET"
-	hydra -L $USER_FILE -P $PASS_FILE $TARGET https-get -s 443 -t $THREADS -f -q -e ns -m $HTTP_LOCATION 
 fi
 
 if [ -z "$port_445" ]
