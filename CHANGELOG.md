@@ -1,4 +1,5 @@
 ## CHANGELOG:
+* v2.5 Updated SSH threads to avoid saturation with too many requests
 * v2.4 Disabled web brute force ports (80/443) to prevent F+ results
 * v2.3 Updated default credentials for Rasberry Pi/Kali
 * v2.2 Added CVE-2020-29583 Zyxel SSH Hardcoded Credentials
